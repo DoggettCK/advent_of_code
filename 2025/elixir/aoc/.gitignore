@@ -30,3 +30,6 @@ aoc-*.tar
 
 # direnv config
 .envrc
+
+# Don't want to save actual inputs
+/test/input/day*/real
