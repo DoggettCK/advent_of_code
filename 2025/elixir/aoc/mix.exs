@@ -21,11 +21,14 @@ defmodule Aoc.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:cachex, "~> 4.1.1"},
+      {:combinatorics, "~> 0.1.0"},
       {:igniter, "~> 0.7.0"},
+      {:libgraph, "~> 0.16.0"},
+      {:math, "~> 0.7.0"},
       {:mix_test_watch, "~> 1.4.0", only: [:dev, :test], runtime: false},
-      {:styler, "~> 1.9", only: [:dev, :test], runtime: false}
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:styler, "~> 1.9", only: [:dev, :test], runtime: false},
+      {:statistics, "~> 0.6.3"}
     ]
   end
 end
