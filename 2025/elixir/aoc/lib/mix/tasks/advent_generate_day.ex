@@ -49,9 +49,9 @@ defmodule Mix.Tasks.Advent.Generate.Day do
   end
 
   @impl Igniter.Mix.Task
-  def igniter(igniter, argv) do
+  def igniter(igniter) do
     # Do your work here and return an updated igniter
-    {arguments, _argv} = positional_args!(argv)
+    arguments = dbg(igniter.args.positional)
 
     day =
       arguments
