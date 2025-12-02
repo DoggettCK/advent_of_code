@@ -6,7 +6,8 @@ defmodule Day02 do
     Enum.reduce(args, 0, &find_invalid_ids/2)
   end
 
-  def part2(_args) do
+  def part2(args) do
+    Enum.reduce(args, 0, &find_invalid_ids_v2/2)
   end
 
   defp find_invalid_ids(range_str, sum) do
@@ -88,4 +89,103 @@ defmodule Day02 do
   defp double_prefix(n) when n < 100_000, do: n * 100_000 + n
   defp double_prefix(n) when n < 1_000_000, do: n * 1_000_000 + n
   defp double_prefix(n) when n < 10_000_000, do: n * 10_000_000 + n
+
+  # Part 2
+  defp find_invalid_ids_v2(range_str, sum) do
+    [rs, re] = String.split(range_str, "-")
+
+    actual_range = String.to_integer(rs)..String.to_integer(re)
+    start_len = String.length(rs)
+    end_len = String.length(re)
+
+    (possibilities(start_len) ++ possibilities(end_len))
+    |> List.flatten()
+    |> Enum.uniq()
+    |> Enum.filter(fn x -> x in actual_range end)
+    |> Enum.sum()
+    |> Kernel.+(sum)
+  end
+
+  defp possibilities(1), do: []
+
+  defp possibilities(2) do
+    [possibilities_of_length(1, 2)]
+  end
+
+  defp possibilities(3) do
+    [possibilities_of_length(1, 3)]
+  end
+
+  defp possibilities(4) do
+    [possibilities_of_length(1, 4), possibilities_of_length(2, 2)]
+  end
+
+  defp possibilities(5) do
+    [possibilities_of_length(1, 5)]
+  end
+
+  defp possibilities(6) do
+    [
+      possibilities_of_length(1, 6),
+      possibilities_of_length(2, 3),
+      possibilities_of_length(3, 2)
+    ]
+  end
+
+  defp possibilities(7) do
+    [possibilities_of_length(1, 7)]
+  end
+
+  defp possibilities(8) do
+    [
+      possibilities_of_length(1, 8),
+      possibilities_of_length(2, 4),
+      possibilities_of_length(4, 2)
+    ]
+  end
+
+  defp possibilities(9) do
+    [
+      possibilities_of_length(1, 9),
+      possibilities_of_length(3, 3)
+    ]
+  end
+
+  defp possibilities(10) do
+    [
+      possibilities_of_length(1, 10),
+      possibilities_of_length(2, 5),
+      possibilities_of_length(5, 2)
+    ]
+  end
+
+  defp possibilities_of_length(1, n) do
+    for i <- 1..9 do
+      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(10)
+    end
+  end
+
+  defp possibilities_of_length(2, n) do
+    for i <- 10..99 do
+      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(100)
+    end
+  end
+
+  defp possibilities_of_length(3, n) do
+    for i <- 100..999 do
+      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(1_000)
+    end
+  end
+
+  defp possibilities_of_length(4, n) do
+    for i <- 1000..9999 do
+      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(10_000)
+    end
+  end
+
+  defp possibilities_of_length(5, n) do
+    for i <- 10_000..99_999 do
+      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(100_000)
+    end
+  end
 end
