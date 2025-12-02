@@ -213,4 +213,10 @@ defmodule Common do
     |> Map.put(a, b_val)
     |> Map.put(b, a_val)
   end
+
+  def is_odd?(n), do: rem(n, 2) == 1
+  def is_even?(n), do: rem(n, 2) == 0
+
+  def ok(value), do: {:ok, value}
+  def error(value), do: {:error, value}
 end
