@@ -21,19 +21,17 @@ defmodule Day06Test do
     assert 6_172_481_852_142 == result
   end
 
-  @tag :skip
   test "part2 example" do
-    input = read_lines(@example_input)
+    input = read_raw_lines(@example_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 3_263_827 == result
   end
 
-  @tag :skip
   test "part2 real" do
-    input = read_lines(@real_input)
+    input = read_raw_lines(@real_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 10_188_206_723_429 == result
   end
 end

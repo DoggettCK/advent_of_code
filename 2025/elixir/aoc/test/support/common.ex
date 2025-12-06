@@ -16,6 +16,12 @@ defmodule Test.Common do
     |> String.split("\n", trim: trim)
   end
 
+  def read_raw_lines(filename) do
+    filename
+    |> File.read!()
+    |> String.split("\n")
+  end
+
   def read_ints(filename) do
     filename
     |> read_lines()
