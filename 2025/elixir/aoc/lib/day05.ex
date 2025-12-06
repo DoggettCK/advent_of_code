@@ -12,8 +12,6 @@ defmodule Day05 do
     args
     |> parse_input(%{ranges: [], ids: []})
     |> condense_ranges()
-    |> Enum.sort()
-    |> Enum.uniq()
     |> Enum.sum_by(&Range.size/1)
   end
 
@@ -51,8 +49,9 @@ defmodule Day05 do
     simulate({ranges, []}, fn
       _i, {[], coverages} ->
         if length(coverages) == range_len do
-          coverages |> Enum.reverse() |> return()
+          return(coverages)
         else
+          # Call again until nothing has changed
           coverages |> condense_ranges() |> return()
         end
 
@@ -60,7 +59,7 @@ defmodule Day05 do
         {:ok, merged_range, overlaps} = merge_overlaps(r, coverages, [])
 
         if r == merged_range do
-          continue({remaining_ranges, [merged_range | coverages]})
+          continue({remaining_ranges, [merged_range | overlaps]})
         else
           continue({[merged_range | remaining_ranges], overlaps})
         end
