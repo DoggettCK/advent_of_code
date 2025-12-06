@@ -18,7 +18,7 @@ defmodule Day06Test do
     input = read_lines(@real_input)
     result = part1(input)
 
-    assert 0 == result
+    assert 6_172_481_852_142 == result
   end
 
   @tag :skip
