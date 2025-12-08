@@ -21,19 +21,17 @@ defmodule Day07Test do
     assert 1649 == result
   end
 
-  @tag :skip
   test "part2 example" do
     input = read_grid(@example_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 40 == result
   end
 
-  @tag :skip
   test "part2 real" do
     input = read_grid(@real_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 16_937_871_060_075 == result
   end
 end
