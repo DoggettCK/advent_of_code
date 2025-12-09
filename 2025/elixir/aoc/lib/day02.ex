@@ -106,86 +106,30 @@ defmodule Day02 do
     |> Kernel.+(sum)
   end
 
-  defp possibilities(1), do: []
+  @factors [
+    [],
+    [1],
+    [1],
+    [1, 2],
+    [1],
+    [1, 2, 3],
+    [1],
+    [1, 2, 4],
+    [1, 3],
+    [1, 2, 5]
+  ]
 
-  defp possibilities(2) do
-    [possibilities_of_length(1, 2)]
-  end
-
-  defp possibilities(3) do
-    [possibilities_of_length(1, 3)]
-  end
-
-  defp possibilities(4) do
-    [possibilities_of_length(1, 4), possibilities_of_length(2, 2)]
-  end
-
-  defp possibilities(5) do
-    [possibilities_of_length(1, 5)]
-  end
-
-  defp possibilities(6) do
-    [
-      possibilities_of_length(1, 6),
-      possibilities_of_length(2, 3),
-      possibilities_of_length(3, 2)
-    ]
-  end
-
-  defp possibilities(7) do
-    [possibilities_of_length(1, 7)]
-  end
-
-  defp possibilities(8) do
-    [
-      possibilities_of_length(1, 8),
-      possibilities_of_length(2, 4),
-      possibilities_of_length(4, 2)
-    ]
-  end
-
-  defp possibilities(9) do
-    [
-      possibilities_of_length(1, 9),
-      possibilities_of_length(3, 3)
-    ]
-  end
-
-  defp possibilities(10) do
-    [
-      possibilities_of_length(1, 10),
-      possibilities_of_length(2, 5),
-      possibilities_of_length(5, 2)
-    ]
-  end
-
-  defp possibilities_of_length(1, n) do
-    for i <- 1..9 do
-      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(10)
+  for {factors, n} <- Enum.with_index(@factors, 1) do
+    defp possibilities(unquote(n)) do
+      Enum.flat_map(unquote(factors), &possibilities_of_length(&1, div(unquote(n), &1)))
     end
   end
 
-  defp possibilities_of_length(2, n) do
-    for i <- 10..99 do
-      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(100)
-    end
-  end
-
-  defp possibilities_of_length(3, n) do
-    for i <- 100..999 do
-      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(1_000)
-    end
-  end
-
-  defp possibilities_of_length(4, n) do
-    for i <- 1000..9999 do
-      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(10_000)
-    end
-  end
-
-  defp possibilities_of_length(5, n) do
-    for i <- 10_000..99_999 do
-      [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(100_000)
+  for l <- 1..5 do
+    defp possibilities_of_length(unquote(l), n) do
+      for i <- Integer.pow(10, unquote(l) - 1)..(Integer.pow(10, unquote(l)) - 1) do
+        [i] |> List.duplicate(n) |> List.flatten() |> Integer.undigits(Integer.pow(10, unquote(l)))
+      end
     end
   end
 end
