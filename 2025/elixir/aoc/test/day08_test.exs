@@ -21,19 +21,17 @@ defmodule Day08Test do
     assert 122_430 == result
   end
 
-  @tag :skip
   test "part2 example" do
     input = read_ints(@example_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 25_272 == result
   end
 
-  @tag :skip
   test "part2 real" do
     input = read_ints(@real_input)
     result = part2(input)
 
-    assert 0 == result
+    assert 8_135_565_324 == result
   end
 end

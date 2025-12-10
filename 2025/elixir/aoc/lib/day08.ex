@@ -1,8 +1,9 @@
 defmodule Day08 do
   @moduledoc false
+  import Common
 
-  def part1(args, iterations \\ 10) do
-    {graph, shortest_distances} = build_graph_and_shortest_distances(args)
+  def part1(args, iterations) do
+    {_points, graph, shortest_distances} = build_data(args)
 
     shortest_distances
     |> Enum.take(iterations)
@@ -17,10 +18,29 @@ defmodule Day08 do
     |> Enum.product()
   end
 
-  def part2(_args) do
+  def part2(args) do
+    {points, graph, shortest_distances} = build_data(args)
+
+    Enum.reduce_while(shortest_distances, {graph, 0}, fn {_dist, {i, j}}, {g, last_conn_xx} ->
+      case g |> Graph.components() |> length() do
+        1 ->
+          return(last_conn_xx)
+
+        _ ->
+          case Graph.get_paths(g, i, j) do
+            [] ->
+              [x1 | _] = Map.get(points, i)
+              [x2 | _] = Map.get(points, j)
+              continue({Graph.add_edge(g, i, j), x1 * x2})
+
+            _ ->
+              continue({g, last_conn_xx})
+          end
+      end
+    end)
   end
 
-  defp build_graph_and_shortest_distances(coords) do
+  defp build_data(coords) do
     points =
       coords
       |> Stream.with_index(1)
@@ -35,7 +55,7 @@ defmodule Day08 do
         {dist(Map.get(points, i), Map.get(points, j)), {i, j}}
       end
 
-    {graph, Enum.sort(shortest_distances)}
+    {points, graph, Enum.sort(shortest_distances)}
   end
 
   defp dist([x1, y1, z1], [x2, y2, z2]) do
